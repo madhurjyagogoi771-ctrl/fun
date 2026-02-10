@@ -1,181 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Valentine Surprise 💖</title>
+  <title>Teddy Day Surprise 🧸💖</title>
   <style>
     :root{
       --bg1:#0b1020;
       --bg2:#120b1c;
       --card:#0f172a;
-      --text:#e8e8ff;
+      --card2: rgba(255,255,255,.06);
+      --text:#eef0ff;
       --muted:#b7b7e6;
       --accent:#ff4d8d;
       --accent2:#7c3aed;
-      --glow: 0 0 24px rgba(255,77,141,.35);
+      --gold:#ffd166;
+      --good:#4ade80;
+      --shadow: 0 20px 80px rgba(0,0,0,.40);
+      --glow: 0 0 28px rgba(255,77,141,.28);
+      --line: rgba(255,255,255,.12);
+      --line2: rgba(255,255,255,.18);
     }
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      min-height:100vh;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       background:
-        radial-gradient(900px 600px at 10% 10%, rgba(124,58,237,.25), transparent 60%),
-        radial-gradient(900px 600px at 90% 20%, rgba(255,77,141,.18), transparent 60%),
+        radial-gradient(900px 600px at 12% 10%, rgba(124,58,237,.25), transparent 62%),
+        radial-gradient(900px 600px at 90% 20%, rgba(255,77,141,.18), transparent 62%),
+        radial-gradient(900px 600px at 50% 110%, rgba(255,209,224,.08), transparent 55%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
       overflow-x:hidden;
     }
 
     /* floating petals */
     .petal{
-      position:fixed;
-      top:-10vh;
+      position:fixed; top:-10vh;
       width:14px; height:10px;
       background:rgba(255,255,255,.10);
       border:1px solid rgba(255,255,255,.12);
       border-radius: 100% 0 100% 0;
       transform:rotate(25deg);
-      filter: blur(.1px);
       animation: fall linear infinite;
       pointer-events:none;
+      filter: blur(.1px);
+      z-index:0;
     }
     @keyframes fall{
       to{
         transform: translateY(120vh) translateX(var(--drift)) rotate(420deg);
-        opacity:.2;
+        opacity:.15;
       }
     }
 
-    header{
-      padding:28px 18px 10px;
-      text-align:center;
+    /* layout */
+    .container{
+      max-width:1100px;
+      margin:0 auto;
+      padding:22px 16px 70px;
+      position:relative;
+      z-index:1;
     }
-    .badge{
-      display:inline-flex;
-      gap:10px;
+
+    .topbar{
+      display:flex;
+      gap:12px;
       align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:10px;
       padding:10px 14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
       border-radius:999px;
-      background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10);
       backdrop-filter: blur(10px);
       box-shadow: var(--glow);
-      font-size:14px;
       color:var(--muted);
+      font-size:13.5px;
     }
     .dot{
       width:10px;height:10px;border-radius:50%;
       background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
       box-shadow: 0 0 18px rgba(255,77,141,.65);
     }
+    .actions{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    }
+    .toggle{
+      display:flex; gap:10px; align-items:center;
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:13.5px;
+      user-select:none;
+    }
+    .toggle input{accent-color: var(--accent);}
+
     h1{
-      margin:18px 0 8px;
-      font-size: clamp(28px, 5vw, 44px);
-      letter-spacing:.5px;
-      line-height:1.1;
+      margin:12px 0 6px;
+      font-size: clamp(30px, 5vw, 52px);
+      line-height:1.05;
+      letter-spacing:.4px;
     }
     .sub{
-      margin:0 auto;
-      max-width:860px;
+      margin:0;
       color:var(--muted);
-      font-size: clamp(14px, 2.3vw, 16px);
-      line-height:1.6;
+      font-size: clamp(14px, 2.3vw, 16.5px);
+      line-height:1.7;
+      max-width:900px;
     }
 
-    .wrap{
-      max-width:1050px;
-      margin: 18px auto 80px;
-      padding: 0 16px;
+    .grid{
+      margin-top:18px;
       display:grid;
       grid-template-columns: 1.15fr .85fr;
       gap:16px;
     }
-    @media (max-width: 900px){
-      .wrap{grid-template-columns:1fr}
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
     }
 
     .card{
       background: rgba(15,23,42,.65);
-      border:1px solid rgba(255,255,255,.10);
+      border:1px solid var(--line);
       border-radius:22px;
       padding:18px;
       backdrop-filter: blur(10px);
-      box-shadow: 0 18px 60px rgba(0,0,0,.25);
+      box-shadow: var(--shadow);
       position:relative;
       overflow:hidden;
     }
     .card::before{
       content:"";
-      position:absolute; inset:-40px;
+      position:absolute; inset:-60px;
       background:
-        radial-gradient(220px 120px at 10% 10%, rgba(255,77,141,.20), transparent 60%),
-        radial-gradient(260px 160px at 90% 30%, rgba(124,58,237,.18), transparent 65%);
+        radial-gradient(240px 160px at 12% 10%, rgba(255,77,141,.18), transparent 70%),
+        radial-gradient(260px 180px at 88% 24%, rgba(124,58,237,.16), transparent 72%),
+        radial-gradient(280px 220px at 50% 110%, rgba(255,209,224,.10), transparent 68%);
       pointer-events:none;
     }
-    .card > *{ position:relative; }
+    .card > *{position:relative}
 
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width: 560px){
-      .grid{grid-template-columns:1fr}
-    }
-
-    .mini{
-      padding:14px;
-      border-radius:18px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .mini h3{
-      margin:0 0 6px;
-      font-size:15px;
-      color:#fff;
-    }
-    .mini p{ margin:0; color:var(--muted); font-size:13.5px; line-height:1.5; }
-
-    .btnrow{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center;}
+    .btnrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;}
     button{
       border:0;
       cursor:pointer;
       padding:12px 14px;
       border-radius:14px;
-      font-weight:700;
+      font-weight:800;
       color:#0b1020;
       background: linear-gradient(135deg, #fff, #ffd1e0);
-      box-shadow: 0 10px 30px rgba(255,77,141,.18);
-      transition: transform .15s ease, box-shadow .15s ease;
+      box-shadow: 0 12px 34px rgba(255,77,141,.16);
+      transition: transform .12s ease, box-shadow .12s ease;
     }
-    button:hover{ transform: translateY(-2px); box-shadow: 0 16px 40px rgba(255,77,141,.22); }
+    button:hover{ transform: translateY(-2px); box-shadow: 0 18px 48px rgba(255,77,141,.22); }
     .ghost{
       background: rgba(255,255,255,.06);
       color: var(--text);
-      border:1px solid rgba(255,255,255,.12);
+      border:1px solid var(--line2);
       box-shadow:none;
     }
+    .danger{
+      background: rgba(255,255,255,.06);
+      color: #ffd1e0;
+      border:1px solid rgba(255,77,141,.22);
+    }
 
-    .bigmsg{
-      margin-top:14px;
-      padding:16px;
+    /* gift box intro */
+    .giftStage{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 740px){
+      .giftStage{grid-template-columns:1fr}
+    }
+    .giftBox{
+      border-radius:22px;
+      padding:18px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+      min-height:240px;
+    }
+    .giftBox .ribbon{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(90deg, transparent 0 42%, rgba(255,77,141,.22) 42% 58%, transparent 58%),
+        linear-gradient(0deg, transparent 0 42%, rgba(255,77,141,.18) 42% 58%, transparent 58%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .giftBox .bow{
+      position:absolute;
+      left:50%; top:16%;
+      transform:translateX(-50%);
+      width:120px; height:60px;
       border-radius:18px;
-      background: rgba(0,0,0,.18);
-      border: 1px dashed rgba(255,255,255,.18);
-      color: var(--muted);
+      background: rgba(255,77,141,.22);
+      border:1px solid rgba(255,77,141,.25);
+      filter: blur(.1px);
+    }
+    .giftBox .bow::before, .giftBox .bow::after{
+      content:"";
+      position:absolute; top:50%;
+      width:58px; height:40px;
+      border-radius: 60px 60px 10px 60px;
+      background: rgba(255,77,141,.25);
+      border:1px solid rgba(255,77,141,.25);
+      transform: translateY(-50%) rotate(18deg);
+    }
+    .giftBox .bow::before{ left:-36px; }
+    .giftBox .bow::after{
+      right:-36px;
+      border-radius: 60px 60px 60px 10px;
+      transform: translateY(-50%) rotate(-18deg);
+    }
+    .giftBox h2{margin:0 0 8px; font-size:20px}
+    .giftBox p{margin:0; color:var(--muted); line-height:1.65}
+    .giftBox .big{
+      margin-top:14px;
+      font-size:15px;
+      background: rgba(0,0,0,.16);
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:18px;
+      padding:14px;
+      color:var(--muted);
+      white-space:pre-wrap;
+      min-height:72px;
+    }
+
+    .lockedOverlay{
+      position:absolute; inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:10px;
+      background: rgba(0,0,0,.35);
+      border-radius:22px;
+      backdrop-filter: blur(8px);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .lockTitle{font-weight:900; font-size:16px}
+    .lockSub{color:var(--muted); font-size:13.5px; text-align:center; max-width:320px}
+    .pin{
+      display:flex; gap:8px; align-items:center;
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+    }
+    .pin input{
+      width:180px;
+      background: transparent;
+      border:0;
+      outline:none;
+      color:#fff;
+      font-weight:800;
+      letter-spacing:1px;
+    }
+
+    /* teddy */
+    .teddyWrap{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .teddyCard{
+      flex: 1 1 280px;
+      padding:14px;
+      border-radius:20px;
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--line);
+    }
+    .teddyFace{
+      width:170px; height:170px;
+      border-radius:32px;
+      background:
+        radial-gradient(60px 60px at 35% 40%, rgba(255,255,255,.20), transparent 60%),
+        radial-gradient(80px 80px at 70% 30%, rgba(255,209,224,.14), transparent 65%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+      border:1px solid rgba(255,255,255,.10);
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .teddyFace .spark{
+      position:absolute; inset:0;
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 12px, transparent 12px 24px);
+      opacity:.35;
+      mix-blend-mode:screen;
+      pointer-events:none;
+    }
+    .teddyEmoji{
+      font-size:72px;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.28));
+      animation: floaty 2.8s ease-in-out infinite;
+    }
+    @keyframes floaty{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-6px)}
+    }
+
+    .meter{
+      margin-top:10px;
+      background: rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      height:14px;
+      overflow:hidden;
+    }
+    .meter > div{
+      height:100%;
+      width: 20%;
+      background: linear-gradient(90deg, rgba(255,77,141,.75), rgba(255,209,224,.85));
+      border-radius:999px;
+      transition: width .2s ease;
+    }
+    .miniRow{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+      margin-top:10px;
+      color:var(--muted);
+      font-size:13.5px;
+    }
+
+    /* love letter */
+    .letter{
+      margin-top:12px;
+      padding:14px;
+      border-radius:18px;
+      background: rgba(0,0,0,.16);
+      border:1px dashed rgba(255,255,255,.18);
+      color:var(--muted);
       line-height:1.7;
-      font-size:14.5px;
-      min-height: 86px;
+      min-height:120px;
       white-space: pre-wrap;
     }
 
-    .scene{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
+    /* memory wall */
+    .photos{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
+      margin-top:12px;
     }
+    @media (max-width: 700px){
+      .photos{grid-template-columns:1fr}
+    }
+    .photo{
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      aspect-ratio: 4/3;
+      position:relative;
+    }
+    .photo img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.03);
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .photo .cap{
+      position:absolute; left:10px; bottom:10px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-size:12.5px;
+      color: rgba(255,255,255,.90);
+      backdrop-filter: blur(8px);
+    }
+
+    /* mini game */
+    .game{
+      margin-top:12px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      background: rgba(255,255,255,.04);
+    }
+    .gameTop{
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px; flex-wrap:wrap;
+      background: rgba(0,0,0,.12);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-size:13.5px;
+    }
+    canvas{ display:block; width:100%; height:280px; }
+    .hint{color:var(--muted); font-size:13.5px; line-height:1.6; margin-top:10px;}
+
+    /* right panel */
     .mask{
       width:100%;
       aspect-ratio: 1.35 / 1;
@@ -188,7 +419,6 @@
       position:relative;
       overflow:hidden;
     }
-    /* simple “anime-inspired” pattern (not official) */
     .pattern{
       position:absolute; inset:0;
       background:
@@ -207,14 +437,15 @@
       top:58%;
       width:140%;
       height:10px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.75), transparent);
       transform: rotate(-8deg);
       filter: blur(.2px);
       animation: slash 2.8s ease-in-out infinite;
+      opacity:.75;
     }
     @keyframes slash{
-      0%,100%{ opacity:.2; transform: translateX(-4%) rotate(-8deg); }
-      50%{ opacity:.9; transform: translateX(4%) rotate(-8deg); }
+      0%,100%{ opacity:.18; transform: translateX(-4%) rotate(-8deg); }
+      50%{ opacity:.95; transform: translateX(4%) rotate(-8deg); }
     }
     .titleBadge{
       position:absolute;
@@ -243,46 +474,17 @@
       transform: rotate(18deg);
     }
 
-    .smallnote{
-      color:var(--muted);
-      font-size:13.5px;
-      line-height:1.6;
+    .mini{
+      margin-top:12px;
+      padding:14px;
+      border-radius:20px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
     }
+    .mini h3{margin:0 0 6px; font-size:15.5px}
+    .mini p{margin:0; color:var(--muted); font-size:13.5px; line-height:1.65}
 
-    /* modal */
-    .overlay{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      z-index:50;
-    }
-    .modal{
-      width:min(720px, 100%);
-      border-radius:22px;
-      background: rgba(15,23,42,.92);
-      border:1px solid rgba(255,255,255,.12);
-      padding:18px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 28px 90px rgba(0,0,0,.5);
-      position:relative;
-    }
-    .modal h2{margin:0 0 10px}
-    .modal .x{
-      position:absolute;
-      right:12px; top:12px;
-      background: rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.14);
-      color:#fff;
-      padding:8px 10px;
-      border-radius:12px;
-      cursor:pointer;
-    }
-    .pillrow{
-      display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;
-    }
+    .pillrow{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;}
     .pill{
       padding:10px 12px;
       border-radius:999px;
@@ -291,13 +493,61 @@
       color: var(--muted);
       font-size:13.5px;
       cursor:pointer;
+      user-select:none;
+      transition: .12s ease;
     }
-    .pill:hover{ color:#fff; border-color: rgba(255,255,255,.22); }
+    .pill:hover{ color:#fff; border-color: rgba(255,255,255,.22); transform: translateY(-1px); }
+    .pill.active{
+      color:#fff;
+      border-color: rgba(255,77,141,.35);
+      box-shadow: 0 0 18px rgba(255,77,141,.15);
+    }
+
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.92);
+      border: 1px solid rgba(255,255,255,.12);
+      color: var(--muted);
+      font-size: 13.5px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index:99;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+
+    /* sparkle */
+    .sparkle{
+      position:fixed;
+      width:10px;height:10px;
+      border-radius:50%;
+      background: rgba(255,255,255,.75);
+      box-shadow: 0 0 18px rgba(255,77,141,.45);
+      pointer-events:none;
+      z-index:90;
+      animation: pop .7s ease forwards;
+    }
+    @keyframes pop{
+      0%{transform:scale(.6); opacity:0}
+      30%{transform:scale(1); opacity:1}
+      100%{transform:scale(1.4) translateY(-18px); opacity:0}
+    }
+
     footer{
+      margin-top:18px;
       text-align:center;
       color:rgba(255,255,255,.35);
       font-size:12px;
-      padding-bottom:26px;
     }
     .heart{
       display:inline-block;
@@ -312,227 +562,651 @@
 </head>
 <body>
 
-  <header>
-    <div class="badge"><span class="dot"></span> Secret Valentine Mission Activated</div>
+  <div class="container">
+    <div class="topbar">
+      <div class="chip"><span class="dot"></span> Teddy Day Mission: Cute Mode Activated 🧸</div>
+      <div class="actions">
+        <label class="toggle">
+          <input id="soundToggle" type="checkbox" checked />
+          Cute sounds
+        </label>
+        <label class="toggle">
+          <input id="petalToggle" type="checkbox" checked />
+          Petals
+        </label>
+      </div>
+    </div>
+
     <h1>
-      For <span id="herName" style="color:var(--accent); text-shadow: var(--glow);"></span> 💌
+      For <span id="herName" style="color:var(--accent); text-shadow: var(--glow);"></span> 💖
       <br/>
-      <span style="font-size: clamp(16px, 2.8vw, 20px); color: var(--muted); font-weight:600;">
-        A Demon-Slayer-inspired love letter (but you’re the real main character)
+      <span style="font-size: clamp(16px, 2.8vw, 20px); color: var(--muted); font-weight:700;">
+        A tiny anime-inspired Valentine + Teddy Day surprise from <span id="yourName" style="color:#fff"></span>
       </span>
     </h1>
     <p class="sub">
-      I made this little page like a cute “anime episode” for us—soft vibes, petals, and a tiny confession.
-      Tap the buttons to unlock messages and a mini Valentine “quest”. 🗡️🌸
+      Today is Teddy Day 🧸 — so I made you a cute little “episode” with a gift box, a teddy you can hug, and a mini game.
+      (No official anime art used. Just vibes. 🌸🗡️)
     </p>
-  </header>
 
-  <main class="wrap">
+    <div class="grid">
 
-    <section class="card">
-      <h2 style="margin:0 0 10px;">Episode: “The Day My Heart Chose You” <span class="heart">💗</span></h2>
-      <div class="grid">
-        <div class="mini">
-          <h3>🌸 Hashira-Level Cute</h3>
-          <p>Even on my worst days, your smile feels like a healing breathing form.</p>
+      <!-- LEFT MAIN -->
+      <section class="card">
+        <h2 style="margin:0 0 10px;">🎁 Open the Gift Box</h2>
+
+        <div class="giftStage">
+          <div class="giftBox" id="giftBox">
+            <div class="ribbon"></div>
+            <div class="bow"></div>
+
+            <h2>For you, my favorite person 🧸</h2>
+            <p>Enter the secret code to unlock the surprise.</p>
+
+            <div class="lockedOverlay" id="lock">
+              <div class="lockTitle">🔒 Locked</div>
+              <div class="lockSub">Type the code: <b style="color:#fff">TEDDYDAY</b> (all caps) and press Unlock</div>
+              <div class="pin">
+                <input id="codeInput" placeholder="Type code…" />
+                <button id="unlockBtn">Unlock ✨</button>
+              </div>
+            </div>
+
+            <div class="big" id="giftText">
+Tap unlock to reveal what I made for you…
+            </div>
+
+            <div class="btnrow">
+              <button class="ghost" id="sparkBtn">Sparkle Burst ✨</button>
+              <button class="ghost" id="letterBtn">Write Love Letter 💌</button>
+              <button class="ghost" id="teddyBtn">Go to Teddy Room 🧸</button>
+            </div>
+          </div>
+
+          <div class="giftBox" style="background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.10);">
+            <h2 style="margin:0 0 8px;">💖 “Love Breathing” Styles</h2>
+            <p style="color:var(--muted); line-height:1.65; margin:0;">
+              Pick a vibe — it changes the love letter tone.
+            </p>
+            <div class="pillrow" id="modes">
+              <div class="pill active" data-mode="romantic">3rd Form: Full Romance</div>
+              <div class="pill" data-mode="funny">2nd Form: Silly & Cute</div>
+              <div class="pill" data-mode="gentle">1st Form: Gentle Comfort</div>
+              <div class="pill" data-mode="protect">4th Form: Protective Love</div>
+              <div class="pill" data-mode="teddy">Teddy Day Special 🧸</div>
+            </div>
+
+            <div class="mini" style="margin-top:12px;">
+              <h3 style="margin:0 0 6px;">🔑 Extra Secret</h3>
+              <p style="margin:0;">
+                Tell me: <b style="color:#fff">“BUBU + YOU = FOREVER 🌙”</b> and I’ll give you a real-life surprise.
+              </p>
+            </div>
+
+            <div class="mini" style="margin-top:12px;">
+              <h3 style="margin:0 0 6px;">✅ Quick Tips</h3>
+              <p style="margin:0;">
+                1) Click sparkles. 2) Hug teddy. 3) Play mini game. 4) Unlock final confession.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="mini">
-          <h3>🗡️ Stronger Together</h3>
-          <p>Whatever battles come, I want to face them with you—side by side, always.</p>
+
+        <!-- Teddy section -->
+        <div class="teddyWrap" id="teddySection" style="display:none;">
+          <div class="teddyFace">
+            <div class="spark"></div>
+            <div class="teddyEmoji" id="teddyEmoji">🧸</div>
+          </div>
+
+          <div class="teddyCard">
+            <h2 style="margin:0 0 6px;">🧸 Teddy Room</h2>
+            <p style="margin:0; color:var(--muted); line-height:1.65;">
+              This teddy is “charged” by hugs. Fill the hug meter to unlock a cute surprise line. 💗
+            </p>
+
+            <div class="meter" aria-label="Hug meter">
+              <div id="hugBar"></div>
+            </div>
+
+            <div class="miniRow">
+              <span>Hug power: <b id="hugPower" style="color:#fff;">20%</b></span>
+              <span>Honey count: <b id="honey" style="color:#fff;">0</b> 🍯</span>
+            </div>
+
+            <div class="btnrow">
+              <button id="hugBtn">Hug Teddy 🤗</button>
+              <button class="ghost" id="feedBtn">Feed Honey 🍯</button>
+              <button class="ghost" id="danceBtn">Happy Dance 💃</button>
+              <button class="danger" id="closeTeddy">Close</button>
+            </div>
+
+            <div class="hint" id="teddyHint">Tip: Hug until 100% to unlock a special line…</div>
+          </div>
         </div>
-        <div class="mini">
-          <h3>✨ Small Things, Big Love</h3>
-          <p>Your little habits, your voice, your mood swings—everything about you is my favorite story.</p>
-        </div>
-        <div class="mini">
-          <h3>🍡 Date Promise</h3>
-          <p>One Valentine date + one sweet treat. You choose the place, I handle the magic.</p>
-        </div>
-      </div>
 
-      <div class="btnrow">
-        <button id="btnReveal">Reveal My Message 💌</button>
-        <button class="ghost" id="btnQuest">Start Valentine Quest 🎯</button>
-        <button class="ghost" id="btnConfetti">Petal Burst 🌸</button>
-      </div>
+        <!-- Love letter -->
+        <h2 style="margin:18px 0 8px;">💌 Love Letter</h2>
+        <div class="letter" id="letterBox">Tap “Write Love Letter 💌” to generate your Teddy Day letter…</div>
 
-      <div class="bigmsg" id="messageBox"></div>
-
-      <p class="smallnote" style="margin-top:12px;">
-        Tip: You can screenshot this page as a memory. And yes… this was made with love by
-        <b id="yourName"></b>.
-      </p>
-    </section>
-
-    <aside class="scene">
-      <div class="card mask">
-        <div class="pattern"></div>
-        <div class="blade"></div>
-        <div class="titleBadge">VALENTINE ARC • Soft Mode</div>
-        <div class="haori"></div>
-      </div>
-
-      <div class="card">
-        <h3 style="margin:0 0 6px;">Your Love Breathing Forms</h3>
-        <p class="smallnote" style="margin:0 0 10px;">
-          Choose one. It changes the message style (and it’s cute 😌).
+        <!-- Memory Wall -->
+        <h2 style="margin:18px 0 8px;">📸 Memory Wall</h2>
+        <p style="margin:0; color:var(--muted); line-height:1.65;">
+          Add your 3 favorite photos (optional). If you don’t add links, cute placeholders will show.
         </p>
-        <div class="pillrow">
-          <div class="pill" data-mode="gentle">1st Form: Gentle Comfort</div>
-          <div class="pill" data-mode="funny">2nd Form: Silly & Cute</div>
-          <div class="pill" data-mode="romantic">3rd Form: Full Romance</div>
-          <div class="pill" data-mode="protect">4th Form: Protective Love</div>
-        </div>
+        <div class="photos" id="photoGrid"></div>
 
-        <div style="margin-top:12px; padding:12px; border-radius:18px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.10);">
-          <div style="display:flex; gap:10px; align-items:center;">
-            <span style="width:10px;height:10px;border-radius:50%;background:var(--accent2);box-shadow:0 0 18px rgba(124,58,237,.55)"></span>
-            <div style="font-weight:800">Secret Code</div>
+        <!-- Mini Game -->
+        <h2 style="margin:18px 0 8px;">🎮 Mini Game: Catch the Hearts</h2>
+        <p style="margin:0; color:var(--muted); line-height:1.65;">
+          Move your basket with mouse/touch. Catch <b style="color:#fff;">10 hearts</b> to unlock the final confession.
+        </p>
+        <div class="game">
+          <div class="gameTop">
+            <div>Score: <b id="score" style="color:#fff;">0</b> / 10</div>
+            <div>Unlocked: <b id="unlocked" style="color:#fff;">No</b></div>
+            <div class="row">
+              <button class="ghost" id="startGame">Start</button>
+              <button class="ghost" id="stopGame">Stop</button>
+            </div>
           </div>
-          <div class="smallnote" style="margin-top:6px;">
-            Tell me this code and I’ll give you a real-life surprise:
-            <b style="color:#fff">“US FOREVER 🌙”</b>
+          <canvas id="gameCanvas" width="900" height="280"></canvas>
+        </div>
+        <div class="letter" id="finalBox" style="margin-top:12px; min-height:90px;">
+Final confession locked… (Catch 10 hearts 💖)
+        </div>
+
+        <footer>
+          Made with <span class="heart">❤</span> • Happy Teddy Day & Valentine’s Day
+        </footer>
+      </section>
+
+      <!-- RIGHT PANEL -->
+      <aside class="scene">
+        <div class="card mask">
+          <div class="pattern"></div>
+          <div class="blade"></div>
+          <div class="titleBadge">VALENTINE ARC • Teddy Day Special</div>
+          <div class="haori"></div>
+        </div>
+
+        <div class="card">
+          <h2 style="margin:0 0 8px;">🌸 Cute Interactions</h2>
+          <div class="mini">
+            <h3>✨ Sparkles</h3>
+            <p>Click “Sparkle Burst” for cute particles. (Works best after unlocking.)</p>
+          </div>
+          <div class="mini">
+            <h3>🧸 Teddy Day</h3>
+            <p>Open Teddy Room. Hug teddy to 100% and feed honey to unlock secret lines.</p>
+          </div>
+          <div class="mini">
+            <h3>💌 Letter Styles</h3>
+            <p>Pick a style on the left, then “Write Love Letter”.</p>
+          </div>
+          <div class="mini">
+            <h3>🎮 Final Confession</h3>
+            <p>Catch 10 hearts in the mini game to unlock the final confession message.</p>
           </div>
         </div>
-      </div>
-    </aside>
-
-  </main>
-
-  <footer>
-    Made with <span class="heart">❤</span> • Happy Valentine’s Day
-  </footer>
-
-  <!-- Quest modal -->
-  <div class="overlay" id="overlay">
-    <div class="modal">
-      <button class="x" id="closeModal">Close</button>
-      <h2>Valentine Quest 🎯</h2>
-      <p class="smallnote" style="margin:0 0 10px;">
-        Complete these 3 mini missions and you unlock the “final message”.
-      </p>
-      <div class="grid">
-        <div class="mini">
-          <h3>Mission 1</h3>
-          <p>Send me one selfie with your cutest smile 🌸</p>
-          <label style="display:flex; gap:10px; align-items:center; margin-top:10px; color:var(--muted);">
-            <input type="checkbox" class="chk" /> Completed
-          </label>
-        </div>
-        <div class="mini">
-          <h3>Mission 2</h3>
-          <p>Tell me one thing you want us to do together this month ✨</p>
-          <label style="display:flex; gap:10px; align-items:center; margin-top:10px; color:var(--muted);">
-            <input type="checkbox" class="chk" /> Completed
-          </label>
-        </div>
-        <div class="mini">
-          <h3>Mission 3</h3>
-          <p>Type “US FOREVER 🌙” to claim your reward 🥹</p>
-          <label style="display:flex; gap:10px; align-items:center; margin-top:10px; color:var(--muted);">
-            <input type="checkbox" class="chk" /> Completed
-          </label>
-        </div>
-        <div class="mini" style="grid-column:1/-1;">
-          <h3>Final Unlock</h3>
-          <p id="unlockText">Complete all missions to unlock the final message…</p>
-        </div>
-      </div>
+      </aside>
     </div>
   </div>
 
+  <div class="toast" id="toast">Saved.</div>
+
 <script>
-  // ===== EDIT HERE =====
-  const GF_NAME = "My Love";     // <- put her name (e.g., "Ankita")
-  const YOUR_NAME = "Your Boy";  // <- put your name
-  // =====================
+  // =========================
+  // EDIT HERE (Only these)
+  // =========================
+  const GF_NAME = "My Love";     // e.g., "Ankita"
+  const YOUR_NAME = "Bubu";
 
-  const herNameEl = document.getElementById("herName");
-  const yourNameEl = document.getElementById("yourName");
-  const box = document.getElementById("messageBox");
-  herNameEl.textContent = GF_NAME;
-  yourNameEl.textContent = YOUR_NAME;
+  // Optional: add 3 photo URLs (leave empty "" to use placeholders)
+  const PHOTO_1 = "";
+  const PHOTO_2 = "";
+  const PHOTO_3 = "";
+  // =========================
 
-  // petal background
-  const petals = 26;
-  for(let i=0;i<petals;i++){
-    const p = document.createElement("div");
-    p.className = "petal";
-    const left = Math.random()*100;
-    const dur = 6 + Math.random()*8;
-    const delay = Math.random()*6;
-    const drift = (Math.random() < .5 ? -1 : 1) * (20 + Math.random()*60) + "px";
-    p.style.left = left + "vw";
-    p.style.animationDuration = dur + "s";
-    p.style.animationDelay = delay + "s";
-    p.style.setProperty("--drift", drift);
-    p.style.opacity = (0.15 + Math.random()*0.35).toFixed(2);
-    p.style.transform = "rotate(" + (Math.random()*60) + "deg)";
-    document.body.appendChild(p);
-  }
-
-  // message modes
-  let mode = "romantic";
-  const messages = {
-    gentle: `Hey ${GF_NAME} 🌸\n\nYou feel like peace. Like a soft moment after a long day.\nThank you for being my calm, my comfort, and my favorite person.\n\nHappy Valentine’s Day 💗\n— ${YOUR_NAME}`,
-    funny: `Oi ${GF_NAME} 😭💘\n\nI tried to act cool… but my heart is doing backflips.\nYou’re so cute it should be illegal.\n\nBe my Valentine? (Say yes or I’ll spam you with memes.)\n— ${YOUR_NAME}`,
-    romantic: `${GF_NAME} 💌\n\nIn every version of my life, I’d still choose you.\nYou make ordinary days feel like a beautiful episode.\n\nHappy Valentine’s Day, my favorite person.\n— ${YOUR_NAME}`,
-    protect: `${GF_NAME} 🗡️\n\nI don’t promise a perfect world.\nBut I promise you’ll never face it alone.\nI’m with you—always.\n\nHappy Valentine’s Day.\n— ${YOUR_NAME}`
+  // --- helpers ---
+  const $ = (id) => document.getElementById(id);
+  const toast = $("toast");
+  const showToast = (msg) => {
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"), 1100);
   };
 
-  function setMessage(text){
-    box.textContent = text;
-    box.style.borderColor = "rgba(255,255,255,.22)";
+  // --- sound (tiny synth beeps, no files) ---
+  let audioCtx = null;
+  function beep(freq=520, dur=0.07, type="sine", gain=0.02){
+    if(!$("soundToggle").checked) return;
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.type = type; o.frequency.value = freq;
+      g.gain.value = gain;
+      o.connect(g); g.connect(audioCtx.destination);
+      o.start();
+      setTimeout(()=>{ o.stop(); }, Math.max(20, dur*1000));
+    }catch(e){}
   }
 
-  document.getElementById("btnReveal").addEventListener("click", () => {
-    setMessage(messages[mode]);
-  });
-
-  // petals burst
-  document.getElementById("btnConfetti").addEventListener("click", () => {
-    for(let i=0;i<20;i++){
+  // --- petals ---
+  let petalNodes = [];
+  function makePetals(){
+    removePetals();
+    const petals = 28;
+    for(let i=0;i<petals;i++){
       const p = document.createElement("div");
       p.className = "petal";
-      p.style.left = (45 + Math.random()*10) + "vw";
-      p.style.top = (40 + Math.random()*10) + "vh";
-      p.style.animationDuration = (2.2 + Math.random()*2.2) + "s";
-      p.style.animationDelay = "0s";
-      p.style.setProperty("--drift", ((Math.random()<.5?-1:1)*(40+Math.random()*120))+"px");
-      p.style.opacity = (0.25 + Math.random()*0.35).toFixed(2);
+      const left = Math.random()*100;
+      const dur = 6 + Math.random()*8;
+      const delay = Math.random()*6;
+      const drift = (Math.random()<.5?-1:1)*(20+Math.random()*70) + "px";
+      p.style.left = left + "vw";
+      p.style.animationDuration = dur + "s";
+      p.style.animationDelay = delay + "s";
+      p.style.setProperty("--drift", drift);
+      p.style.opacity = (0.12 + Math.random()*0.35).toFixed(2);
+      p.style.transform = "rotate(" + (Math.random()*60) + "deg)";
       document.body.appendChild(p);
-      setTimeout(()=>p.remove(), 4500);
+      petalNodes.push(p);
+    }
+  }
+  function removePetals(){
+    petalNodes.forEach(n=>n.remove());
+    petalNodes = [];
+  }
+
+  // --- sparkle burst ---
+  function sparkleBurst(x, y, count=18){
+    for(let i=0;i<count;i++){
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      const dx = (Math.random()<.5?-1:1)*(8+Math.random()*30);
+      const dy = -(10+Math.random()*35);
+      s.style.left = (x + dx) + "px";
+      s.style.top  = (y + dy) + "px";
+      s.style.opacity = (0.4 + Math.random()*0.6).toFixed(2);
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 800);
+    }
+  }
+
+  // --- set names ---
+  $("herName").textContent = GF_NAME;
+  $("yourName").textContent = YOUR_NAME;
+
+  // --- photo grid ---
+  const placeholders = [
+    "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ff4d8d" stop-opacity="0.25"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0.25"/></linearGradient></defs><rect width="100%" height="100%" fill="#0f172a"/><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="36">Our Moment ✨</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="#b7b7e6" font-family="Arial" font-size="18">Add your photo link in code</text></svg>`),
+    "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="1" x2="0" y1="0" y2="1"><stop stop-color="#ffd1e0" stop-opacity="0.18"/><stop offset="1" stop-color="#7c3aed" stop-opacity="0.22"/></linearGradient></defs><rect width="100%" height="100%" fill="#0f172a"/><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="36">Teddy Day 🧸</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="#b7b7e6" font-family="Arial" font-size="18">Cute memories here</text></svg>`),
+    "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><defs><linearGradient id="g" x1="0" x2="1" y1="1" y2="0"><stop stop-color="#ff4d8d" stop-opacity="0.20"/><stop offset="1" stop-color="#ffd166" stop-opacity="0.18"/></linearGradient></defs><rect width="100%" height="100%" fill="#0f172a"/><rect width="100%" height="100%" fill="url(#g)"/><text x="50%" y="48%" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Arial" font-size="36">Us Forever 💖</text><text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" fill="#b7b7e6" font-family="Arial" font-size="18">Add photo link in code</text></svg>`)
+  ];
+  const photos = [
+    PHOTO_1 || placeholders[0],
+    PHOTO_2 || placeholders[1],
+    PHOTO_3 || placeholders[2]
+  ];
+  const caps = ["Cutest moment", "Teddy day vibe", "My favorite memory"];
+  const grid = $("photoGrid");
+  grid.innerHTML = photos.map((src,i)=>`
+    <div class="photo">
+      <img src="${src}" alt="Memory ${i+1}">
+      <div class="cap">${caps[i]}</div>
+    </div>
+  `).join("");
+
+  // --- modes ---
+  let mode = "romantic";
+  const modesEl = $("modes");
+  modesEl.addEventListener("click", (e)=>{
+    const pill = e.target.closest(".pill");
+    if(!pill) return;
+    [...modesEl.querySelectorAll(".pill")].forEach(p=>p.classList.remove("active"));
+    pill.classList.add("active");
+    mode = pill.dataset.mode;
+    beep(650, .06, "triangle", .02);
+    showToast("Style selected ✅");
+  });
+
+  // --- gift lock ---
+  const lock = $("lock");
+  const giftText = $("giftText");
+  let unlocked = false;
+
+  function setGiftMessage(text){
+    giftText.textContent = text;
+  }
+
+  $("unlockBtn").addEventListener("click", ()=>{
+    const code = ($("codeInput").value || "").trim();
+    if(code === "TEDDYDAY"){
+      unlocked = true;
+      lock.style.display = "none";
+      setGiftMessage(
+`Unlocked! 🎉
+
+Hi ${GF_NAME} 🧸💖
+Today is Teddy Day, so I’m sending you a teddy… but also a whole little world of love.
+
+• Open Teddy Room → hug teddy to 100%
+• Write Love Letter → choose a style
+• Play the mini game → unlock the final confession
+
+— From ${YOUR_NAME}`
+      );
+      beep(740,.08,"sine",.03); beep(880,.08,"sine",.02);
+      showToast("Gift unlocked ✨");
+      // small sparkle at center
+      const r = $("giftBox").getBoundingClientRect();
+      sparkleBurst(r.left + r.width*0.55, r.top + r.height*0.42, 22);
+    }else{
+      beep(180,.12,"square",.02);
+      showToast("Wrong code 😭 Try: TEDDYDAY");
     }
   });
 
-  // mode pills
-  document.querySelectorAll(".pill").forEach(p => {
-    p.addEventListener("click", () => {
-      mode = p.dataset.mode;
-      setMessage("Mode changed ✅ Now tap “Reveal My Message 💌”");
-    });
+  $("sparkBtn").addEventListener("click", ()=>{
+    const r = $("giftBox").getBoundingClientRect();
+    sparkleBurst(r.left + r.width*0.50, r.top + r.height*0.35, 26);
+    beep(600,.06,"triangle",.02);
   });
 
-  // quest modal
-  const overlay = document.getElementById("overlay");
-  document.getElementById("btnQuest").addEventListener("click", () => overlay.style.display = "flex");
-  document.getElementById("closeModal").addEventListener("click", () => overlay.style.display = "none");
-  overlay.addEventListener("click", (e) => { if(e.target === overlay) overlay.style.display = "none"; });
+  // --- teddy room ---
+  let hug = 20;
+  let honey = 0;
+  const hugBar = $("hugBar");
+  const hugPower = $("hugPower");
+  const honeyEl = $("honey");
+  const teddySection = $("teddySection");
+  const teddyHint = $("teddyHint");
+  const teddyEmoji = $("teddyEmoji");
 
-  const unlockText = document.getElementById("unlockText");
-  const chks = Array.from(document.querySelectorAll(".chk"));
-  function checkUnlock(){
-    const done = chks.every(c => c.checked);
-    unlockText.textContent = done
-      ? `Unlocked! 🎉\nFinal message: ${GF_NAME}, you’re my favorite blessing. Let’s make this Valentine’s Day a memory.\n— ${YOUR_NAME}`
-      : "Complete all missions to unlock the final message…";
-    unlockText.style.color = done ? "#fff" : "var(--muted)";
+  function updateHug(){
+    hug = Math.max(0, Math.min(100, hug));
+    hugBar.style.width = hug + "%";
+    hugPower.textContent = hug + "%";
+    honeyEl.textContent = honey;
+    if(hug >= 100){
+      teddyHint.innerHTML = `Unlocked 🥹🧸: <b style="color:#fff;">You’re my comfort teddy and my favorite person.</b> (Now play the mini game to unlock the final confession!)`;
+      teddyEmoji.textContent = "🧸💖";
+    }else if(hug >= 60){
+      teddyHint.textContent = "Awww… teddy is getting warm 🥹 Keep hugging…";
+      teddyEmoji.textContent = "🧸✨";
+    }else{
+      teddyHint.textContent = "Tip: Hug until 100% to unlock a special line…";
+      teddyEmoji.textContent = "🧸";
+    }
   }
-  chks.forEach(c => c.addEventListener("change", checkUnlock));
+  updateHug();
 
-  // set a sweet default
-  setMessage("Tap “Reveal My Message 💌” to open your Valentine letter…");
+  function openTeddy(){
+    teddySection.style.display = "flex";
+    const r = teddySection.getBoundingClientRect();
+    sparkleBurst(r.left + 80, r.top + 90, 14);
+    showToast("Welcome to Teddy Room 🧸");
+  }
+  function closeTeddy(){
+    teddySection.style.display = "none";
+    showToast("Teddy Room closed");
+  }
+
+  $("teddyBtn").addEventListener("click", ()=>{ openTeddy(); beep(520,.07,"sine",.02); });
+  $("closeTeddy").addEventListener("click", ()=>{ closeTeddy(); beep(220,.08,"square",.015); });
+
+  $("hugBtn").addEventListener("click", ()=>{
+    if(!unlocked){ showToast("Unlock the gift first 🔒"); beep(200,.10,"square",.015); return; }
+    hug += 10;
+    beep(760,.06,"sine",.025);
+    const r = teddyEmoji.getBoundingClientRect();
+    sparkleBurst(r.left + r.width/2, r.top + r.height/2, 12);
+    updateHug();
+  });
+
+  $("feedBtn").addEventListener("click", ()=>{
+    if(!unlocked){ showToast("Unlock the gift first 🔒"); beep(200,.10,"square",.015); return; }
+    honey += 1;
+    hug += 6;
+    beep(540,.06,"triangle",.02);
+    showToast("Teddy is happy 🍯");
+    updateHug();
+  });
+
+  $("danceBtn").addEventListener("click", ()=>{
+    if(!unlocked){ showToast("Unlock the gift first 🔒"); beep(200,.10,"square",.015); return; }
+    const seq = [660, 720, 780, 840];
+    seq.forEach((f,i)=> setTimeout(()=>beep(f,.06,"sine",.02), i*80));
+    teddyEmoji.style.transform = "rotate(-6deg) translateY(-4px)";
+    setTimeout(()=>teddyEmoji.style.transform="", 260);
+    showToast("Happy dance 🧸💃");
+  });
+
+  // --- Love letter with typewriter ---
+  const letterBox = $("letterBox");
+  const messages = {
+    gentle: `Hey ${GF_NAME} 🌸\n\nYou feel like peace — like a soft moment after a long day.\nThank you for being my calm, my comfort, and my safest place.\n\nHappy Teddy Day 🧸 and Valentine’s Day 💗\n— ${YOUR_NAME}`,
+    funny: `Oi ${GF_NAME} 😭💘\n\nI tried to act cool… but my heart is doing backflips.\nYou’re so cute it should be illegal.\n\nBe my Valentine? (Say yes or I’ll send teddy memes.)\n— ${YOUR_NAME}`,
+    romantic: `${GF_NAME} 💌\n\nIn every version of my life, I’d still choose you.\nYou turn ordinary days into beautiful episodes.\n\nHappy Teddy Day 🧸 + Valentine’s Day 💗\n— ${YOUR_NAME}`,
+    protect: `${GF_NAME} 🗡️\n\nI don’t promise a perfect world.\nBut I promise you’ll never face it alone.\nI’m with you—always.\n\nHappy Teddy Day 🧸\n— ${YOUR_NAME}`,
+    teddy: `${GF_NAME} 🧸💖\n\nToday is Teddy Day, so I’m giving you a teddy…\nbut honestly, you are the teddy to my heart — my comfort, my home.\n\nWhenever you feel low, remember: Bubu is always here.\nHappy Teddy Day, my favorite person.\n— ${YOUR_NAME}`
+  };
+
+  function typeWrite(el, text, speed=14){
+    el.textContent = "";
+    let i=0;
+    const timer = setInterval(()=>{
+      el.textContent += text[i] || "";
+      if(i % 7 === 0) beep(520 + (i%5)*40, .03, "triangle", .008);
+      i++;
+      if(i >= text.length){
+        clearInterval(timer);
+      }
+    }, speed);
+  }
+
+  $("letterBtn").addEventListener("click", ()=>{
+    if(!unlocked){ showToast("Unlock the gift first 🔒"); beep(200,.10,"square",.015); return; }
+    typeWrite(letterBox, messages[mode] || messages.romantic, 14);
+    showToast("Letter created 💌");
+    const r = letterBox.getBoundingClientRect();
+    sparkleBurst(r.left + r.width*0.35, r.top + 30, 14);
+  });
+
+  // --- petal toggle ---
+  $("petalToggle").addEventListener("change", ()=>{
+    if($("petalToggle").checked) makePetals();
+    else removePetals();
+  });
+  makePetals();
+
+  // --- mini game: catch hearts ---
+  const canvas = $("gameCanvas");
+  const ctx = canvas.getContext("2d");
+  const scoreEl = $("score");
+  const unlockedEl = $("unlocked");
+  const finalBox = $("finalBox");
+  let running = false;
+  let score = 0;
+  let basketX = 0.5;
+  let hearts = [];
+  let lastSpawn = 0;
+
+  function resizeCanvasToCSS(){
+    // Keep internal resolution consistent
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = Math.floor(rect.width * devicePixelRatio);
+    canvas.height = Math.floor(rect.height * devicePixelRatio);
+    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  }
+  window.addEventListener("resize", resizeCanvasToCSS);
+  setTimeout(resizeCanvasToCSS, 0);
+
+  function spawnHeart(){
+    hearts.push({
+      x: Math.random()*0.92 + 0.04,
+      y: -0.08,
+      v: 0.0025 + Math.random()*0.0025,
+      r: 16 + Math.random()*10,
+      type: Math.random() < 0.12 ? "gold" : "pink"
+    });
+  }
+
+  function draw(){
+    const w = canvas.getBoundingClientRect().width;
+    const h = canvas.getBoundingClientRect().height;
+
+    // bg
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle = "rgba(0,0,0,.08)";
+    ctx.fillRect(0,0,w,h);
+
+    // basket
+    const bx = basketX*w;
+    const bw = Math.max(90, w*0.14);
+    const by = h - 30;
+    ctx.fillStyle = "rgba(255,255,255,.12)";
+    roundRect(ctx, bx - bw/2, by-14, bw, 18, 10, true);
+    ctx.fillStyle = "rgba(255,77,141,.55)";
+    roundRect(ctx, bx - bw/2 + 8, by-10, bw-16, 10, 8, true);
+
+    // hearts
+    hearts.forEach(o=>{
+      const x = o.x*w;
+      const y = o.y*h;
+      ctx.font = `${Math.floor(o.r)}px Arial`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(o.type==="gold" ? "💛" : "💖", x, y);
+    });
+
+    // hint text
+    ctx.fillStyle = "rgba(255,255,255,.6)";
+    ctx.font = "13px Arial";
+    ctx.textAlign = "left";
+    ctx.fillText("Move basket with mouse / touch. Catch hearts 💖", 12, 18);
+  }
+
+  function roundRect(ctx, x, y, w, h, r, fill){
+    ctx.beginPath();
+    ctx.moveTo(x+r, y);
+    ctx.arcTo(x+w, y, x+w, y+h, r);
+    ctx.arcTo(x+w, y+h, x, y+h, r);
+    ctx.arcTo(x, y+h, x, y, r);
+    ctx.arcTo(x, y, x+w, y, r);
+    ctx.closePath();
+    if(fill) ctx.fill();
+  }
+
+  function step(ts){
+    if(!running) return;
+    const w = canvas.getBoundingClientRect().width;
+    const h = canvas.getBoundingClientRect().height;
+
+    if(!lastSpawn) lastSpawn = ts;
+    if(ts - lastSpawn > 500){
+      spawnHeart();
+      lastSpawn = ts;
+    }
+
+    // update hearts
+    const basketW = Math.max(90, w*0.14);
+    const basketY = h - 30;
+
+    hearts.forEach(o => o.y += o.v * 2.2);
+
+    // collision + cleanup
+    hearts = hearts.filter(o=>{
+      const x = o.x*w;
+      const y = o.y*h;
+      const hit = (y >= basketY-22 && y <= basketY+10 && Math.abs(x - basketX*w) < basketW/2);
+      if(hit){
+        score += (o.type==="gold" ? 2 : 1);
+        scoreEl.textContent = Math.min(score, 10);
+        beep(o.type==="gold" ? 900 : 700, .05, "sine", .02);
+        sparkleBurst(canvas.getBoundingClientRect().left + x, canvas.getBoundingClientRect().top + y, 10);
+        if(score >= 10){
+          unlockFinal();
+        }
+        return false;
+      }
+      return (y < h + 60);
+    });
+
+    draw();
+    requestAnimationFrame(step);
+  }
+
+  function unlockFinal(){
+    running = false;
+    unlockedEl.textContent = "YES ✅";
+    finalBox.textContent =
+`Final confession unlocked 🥹💖
+
+${GF_NAME},
+Today is Teddy Day, and I wanted you to feel loved in the cutest way possible.
+You’re my comfort, my favorite habit, my safe place — and my best story.
+
+Happy Teddy Day 🧸
+Happy Valentine’s Day 💗
+
+— ${YOUR_NAME} (Bubu)`;
+    showToast("Final confession unlocked 💖");
+    const r = finalBox.getBoundingClientRect();
+    sparkleBurst(r.left + r.width*0.55, r.top + 22, 26);
+    beep(880,.08,"sine",.03); beep(740,.08,"sine",.02);
+  }
+
+  function start(){
+    if(!unlocked){ showToast("Unlock the gift first 🔒"); beep(200,.10,"square",.015); return; }
+    score = 0;
+    scoreEl.textContent = "0";
+    unlockedEl.textContent = "No";
+    finalBox.textContent = "Final confession locked… (Catch 10 hearts 💖)";
+    hearts = [];
+    lastSpawn = 0;
+    running = true;
+    resizeCanvasToCSS();
+    showToast("Game started 🎮");
+    requestAnimationFrame(step);
+  }
+  function stop(){
+    running = false;
+    showToast("Game stopped");
+  }
+
+  $("startGame").addEventListener("click", start);
+  $("stopGame").addEventListener("click", stop);
+
+  // mouse/touch control
+  function setBasketFromClientX(clientX){
+    const rect = canvas.getBoundingClientRect();
+    basketX = (clientX - rect.left) / rect.width;
+    basketX = Math.max(0.06, Math.min(0.94, basketX));
+  }
+  canvas.addEventListener("mousemove", (e)=> setBasketFromClientX(e.clientX));
+  canvas.addEventListener("touchmove", (e)=>{
+    if(!e.touches?.length) return;
+    setBasketFromClientX(e.touches[0].clientX);
+    e.preventDefault();
+  }, {passive:false});
+
+  // open teddy with scroll helper
+  $("teddyBtn").addEventListener("click", ()=>{
+    teddySection.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  // sparkle button places sparkles near center
+  $("sparkBtn").addEventListener("click", ()=>{
+    const r = $("giftBox").getBoundingClientRect();
+    sparkleBurst(r.left + r.width*0.65, r.top + r.height*0.25, 26);
+  });
+
+  // initial gift text
+  setGiftMessage("Tap unlock to reveal what I made for you…");
+
 </script>
-
 </body>
 </html>
